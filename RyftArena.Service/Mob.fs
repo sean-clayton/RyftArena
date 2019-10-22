@@ -1,42 +1,38 @@
 namespace RyftArena.Service
 
-open Common
-open Measurements
+open System
 
 module Mob =
-
     type MobHealth = int
 
     type MobAttachment =
-        { Id: Id.T
+        { Id: Guid
           Name: string }
 
     type MobPlacement =
         | InBench
         | OnBoard
 
-    type MobId = Id.T
-
     type MeleeAttackStyle =
         | Plus
         | Square
 
     type AttackStyle =
-        | Ranged of int<M>
+        | Ranged of int
         | Melee of MeleeAttackStyle
 
     type T =
-        { Id: MobId
+        { Id: Guid
           Name: string
           Tier: int
           Value: int
           MaxHealth: int
           AttackStyle: AttackStyle
-          Speed: int<M / Second>
+          Speed: int
           Successor: T option }
 
     type MobInPlay =
-        { Id: Id.T
+        { Id: Guid
           Mob: T
           Owner: Player.T
           Placement: MobPlacement

@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "RyftArena.Service", "RyftArena.Service\RyftArena.Service.fsproj", "{662260EB-B06A-451F-A812-F0F3A3947D6F}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "RyftArena.Service.Test", "RyftArena.Service.Test\RyftArena.Service.Test.fsproj", "{306DCAA7-045B-4077-9366-CCF53C318163}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{662260EB-B06A-451F-A812-F0F3A3947D6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{662260EB-B06A-451F-A812-F0F3A3947D6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{662260EB-B06A-451F-A812-F0F3A3947D6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{306DCAA7-045B-4077-9366-CCF53C318163}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{306DCAA7-045B-4077-9366-CCF53C318163}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{306DCAA7-045B-4077-9366-CCF53C318163}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{306DCAA7-045B-4077-9366-CCF53C318163}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
@@ -20,6 +26,22 @@ Global
 		$1.DirectoryNamespaceAssociation = PrefixedFlat
 		$0.StandardHeader = $2
 		$0.VersionControlPolicy = $3
+		$0.TextStylePolicy = $4
+		$4.FileWidth = 80
+		$4.TabsToSpaces = True
+		$4.NoTabsAfterNonTabs = True
+		$4.scope = text/x-fsharp
+		$0.FSharpFormattingPolicy = $5
+		$5.DefaultFormat = $6
+		$6.IndentOnTryWith = False
+		$6.ReorderOpenDeclaration = True
+		$6.SpaceAfterComma = True
+		$6.SpaceAfterSemicolon = True
+		$6.SpaceAroundDelimiter = True
+		$6.SpaceBeforeArgument = True
+		$6.SpaceBeforeColon = True
+		$6.__added = 0
+		$5.scope = text/x-fsharp
 		version = 1.0.0
 	EndGlobalSection
 EndGlobal

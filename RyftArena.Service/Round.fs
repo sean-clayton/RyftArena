@@ -1,6 +1,5 @@
 namespace RyftArena.Service
 
-open Common
 open Mob
 
 module Round =
@@ -25,9 +24,8 @@ module Round =
           OpponentA: Player.T
           OpponentB: Player.T
           RoundKind: RoundKind
-          mutable MobPositions: Map<MobInPlay, TwoDimensional.Position>
+          mutable MobPositions: Map<MobInPlay, System.Numerics.Vector2>
           mutable MobHealth: Map<MobInPlay, MobHealth> }
-
 
     /// <summary>
     /// Gets the winner from a round,
