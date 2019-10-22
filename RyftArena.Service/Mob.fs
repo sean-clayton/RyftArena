@@ -36,7 +36,8 @@ module Mob =
           Successor: T option }
 
     type MobInPlay =
-        { Mob: T
+        { Id: Id.T
+          Mob: T
           Owner: Player.T
           Placement: MobPlacement
           Attachment: MobAttachment }
