@@ -4,7 +4,7 @@ open Common
 
 module Player =
 
-    type PlayerId = Id
+    type PlayerId = Id.T
 
     type T =
         { Id: PlayerId

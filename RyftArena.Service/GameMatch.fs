@@ -1,5 +1,6 @@
 namespace RyftArena.Service
 
+open Common
 open Mob
 
 module GameMatch =
@@ -19,7 +20,8 @@ module GameMatch =
         | ReceiveItem of newItem: MobAttachment * recievingPlayer: Player.T
 
     type T =
-        { PlayerGold: Map<Player.T, PlayerGoldAmount>
+        { Id: Id.T
+          PlayerGold: Map<Player.T, PlayerGoldAmount>
           Players: Player.T list
           PlayerHealth: Map<Player.T, PlayerHealthAmount>
           PlayerMobs: Map<Player.T, MobInPlay list> }
@@ -37,7 +39,8 @@ module GameMatch =
                   |> Map.add mob.Owner ((gameMatch.PlayerGold |> Map.find mob.Owner) + mob.Mob.Value) }
 
     let createGame players =
-        { Players = players
+        { Id = Id.generate()
+          Players = players
           PlayerGold = Map.ofList (List.zip players (List.replicate (List.length players) 1))
           PlayerHealth = Map.ofList (List.zip players (List.replicate (List.length players) 100))
           PlayerMobs = Map.empty }

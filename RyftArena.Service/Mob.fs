@@ -8,14 +8,14 @@ module Mob =
     type MobHealth = int
 
     type MobAttachment =
-        { Id: Id
+        { Id: Id.T
           Name: string }
 
     type MobPlacement =
         | InBench
         | OnBoard
 
-    type MobId = Id
+    type MobId = Id.T
 
     type MeleeAttackStyle =
         | Plus

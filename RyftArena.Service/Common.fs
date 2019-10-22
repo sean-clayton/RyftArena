@@ -2,9 +2,10 @@ namespace RyftArena.Service
 
 module Common =
 
-    type Id = Id of string
+    module Id =
+        type T = Id of string
 
-    let generateId() = Id(System.Guid.NewGuid().ToString())
+        let generate() = Id(System.Guid.NewGuid().ToString())
 
     module Measurements =
         [<MeasureAttribute>]
