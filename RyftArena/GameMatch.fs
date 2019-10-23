@@ -6,6 +6,7 @@ open System.Numerics
 open Mob
 
 module GameMatch =
+
     type PlayerHealthAmount = int
 
     type PlayerGoldAmount = int
@@ -35,21 +36,17 @@ module GameMatch =
           PlayerMobs: Map<Player.T, MobInPlay list> }
 
     let sellMob mob game =
-        let previousMobs = game.PlayerMobs |> Map.find mob.Owner
+        let previous t = Map.find mob.Owner t
+        let previousGold = previous game.PlayerGold
+        let previousMobs = previous game.PlayerMobs
+        let newMobs = List.filter ((<>) mob) previousMobs
 
-        let newMobs = previousMobs |> List.filter ((=) mob)
-
-        match newMobs = previousMobs with
-        | true -> Error (InvalidAction InvalidMobSale)
-        | _ ->
-            Ok { game with
-                  PlayerMobs =
-                      game.PlayerMobs |> Map.add mob.Owner newMobs
-                  PlayerGold =
-                      game.PlayerGold
-                      |> Map.add mob.Owner
-                             ((game.PlayerGold |> Map.find mob.Owner)
-                              + mob.Mob.Value) }
+        if newMobs = previousMobs
+        then Error (InvalidAction InvalidMobSale)
+        else Ok { game with
+                    PlayerMobs = Map.add mob.Owner newMobs game.PlayerMobs
+                    PlayerGold = game.PlayerGold
+                        |> Map.add mob.Owner (previousGold + mob.Mob.Value) }
 
     let createGame players =
         { Id = Guid.NewGuid()

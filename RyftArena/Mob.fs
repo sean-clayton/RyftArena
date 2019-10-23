@@ -4,6 +4,7 @@ open System
 open Common.Errors
 
 module Mob =
+
     type MobHealth = int
 
     type MobAttachment =
