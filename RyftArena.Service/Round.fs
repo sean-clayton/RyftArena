@@ -35,14 +35,21 @@ module Round =
     let getWinnerFromRound round =
         match round.Stage with
         | Resolving ->
-            let remainingMobs = round.MobHealth |> Map.filter (fun _mob health -> health > 0)
-            let opponentAIsAlive = remainingMobs |> Map.exists (fun mob _health -> mob.Owner = round.OpponentA)
-            let opponentBisAlive = remainingMobs |> Map.exists (fun mob _health -> mob.Owner = round.OpponentB)
+            let remainingMobs =
+                round.MobHealth |> Map.filter (fun _mob health -> health > 0)
 
-            match (opponentAIsAlive, opponentBisAlive) with
-            | (true, _) -> Some(Victor round.OpponentA)
-            | (_, true) -> Some(Victor round.OpponentB)
-            | (false, false) -> Some Draw
+            let opponentIsAlive opponent =
+                remainingMobs
+                |> Map.exists (fun mob _health -> mob.Owner = opponent)
+
+            let opponentAIsAlive = opponentIsAlive round.OpponentA
+
+            let opponentBisAlive = opponentIsAlive round.OpponentB
+
+            match opponentAIsAlive, opponentBisAlive with
+            | true, _ -> Some(Victor round.OpponentA)
+            | _, true -> Some(Victor round.OpponentB)
+            | _ -> Some Draw
 
         | _ -> None
 
