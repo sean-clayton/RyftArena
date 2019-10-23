@@ -1,11 +1,11 @@
-namespace RyftArena.Service
+namespace RyftArena
 
 open System
+open System.Numerics
 open Mob
 
 module GameMatch =
     type PlayerHealthAmount = int
-
     type PlayerGoldAmount = int
 
     type MatchEvents =
@@ -13,6 +13,7 @@ module GameMatch =
         | SellMob of MobInPlay
         | MobAttackMob of round: Round.T * attacker: MobInPlay * receiver: MobInPlay * damageAmount: int
         | MobKilled of MobInPlay
+        | MobMoved of MobInPlay * Vector2
         | NewRound of Round.T
         | RoundStarted of Round.T
         | BuyMob of newMob: Mob.T * purchaser: Player.T

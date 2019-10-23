@@ -1,9 +1,9 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "RyftArena.Service", "RyftArena.Service\RyftArena.Service.fsproj", "{662260EB-B06A-451F-A812-F0F3A3947D6F}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "RyftArena", "RyftArena\RyftArena.fsproj", "{662260EB-B06A-451F-A812-F0F3A3947D6F}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "RyftArena.Service.Test", "RyftArena.Service.Test\RyftArena.Service.Test.fsproj", "{306DCAA7-045B-4077-9366-CCF53C318163}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "RyftArena.Test", "RyftArena.Test\RyftArena.Test.fsproj", "{306DCAA7-045B-4077-9366-CCF53C318163}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

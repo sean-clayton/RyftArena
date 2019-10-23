@@ -6,6 +6,7 @@
         <IsPackable>false</IsPackable>
         <GenerateProgramFile>false</GenerateProgramFile>
         <ReleaseVersion>1.0.0</ReleaseVersion>
+        <RootNamespace>RyftArena.Service.Test</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\RyftArena.Service\RyftArena.Service.fsproj" />
+      <ProjectReference Include="..\RyftArena\RyftArena.fsproj" />
     </ItemGroup>
 
 </Project>

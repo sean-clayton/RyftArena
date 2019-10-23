@@ -1,4 +1,4 @@
-namespace RyftArena.Service
+namespace RyftArena
 
 open System
 

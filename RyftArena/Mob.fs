@@ -1,6 +1,7 @@
-namespace RyftArena.Service
+namespace RyftArena
 
 open System
+open Common.Errors
 
 module Mob =
     type MobHealth = int
@@ -21,15 +22,28 @@ module Mob =
         | Ranged of int
         | Melee of MeleeAttackStyle
 
+    type Tier =
+        | OneStar
+        | TwoStar
+        | ThreeStar
+
     type T =
         { Id: Guid
           Name: string
-          Tier: int
+          Tier: Tier
           Value: int
           MaxHealth: int
           AttackStyle: AttackStyle
           Speed: int
           Successor: T option }
+
+    let getNextTier mob =
+        match mob with
+        | { Tier = OneStar } ->
+            Ok { Option.get mob.Successor with Tier = TwoStar }
+        | { Tier = TwoStar } ->
+            Ok { Option.get mob.Successor with Tier = ThreeStar }
+        | _ -> Error (InvalidAction InvalidMobUpgrade)
 
     type MobInPlay =
         { Id: Guid

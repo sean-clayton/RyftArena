@@ -1,5 +1,6 @@
-namespace RyftArena.Service
+namespace RyftArena
 
+open System.Numerics
 open Mob
 
 module Round =
@@ -9,14 +10,17 @@ module Round =
         | Draw
 
     type Stage =
+        | Draft
         | Preparing
         | Combat
         | Resolving
         | Looting
 
     type RoundKind =
-        | Neutral
-        | PvP
+        | Pve
+        | Pvp
+        | PvpWithDraft
+        | PveWithDraft
 
     type T =
         { Name: int
@@ -24,7 +28,7 @@ module Round =
           OpponentA: Player.T
           OpponentB: Player.T
           RoundKind: RoundKind
-          mutable MobPositions: Map<MobInPlay, System.Numerics.Vector2>
+          mutable MobPositions: Map<MobInPlay, Vector2>
           mutable MobHealth: Map<MobInPlay, MobHealth> }
 
     /// <summary>
@@ -75,14 +79,16 @@ module Round =
 
     let getNewRound previousRound =
         match previousRound.Name with
-        | 1
+        | 1 -> { previousRound with RoundKind = PveWithDraft }
         | 2
         | 15
-        | 20 -> { previousRound with RoundKind = Neutral }
-        | _ -> { previousRound with RoundKind = PvP }
+        | 20 -> { previousRound with RoundKind = Pve }
+        | num when num % 6 = 0 -> { previousRound with RoundKind = PvpWithDraft }
+        | _ -> { previousRound with RoundKind = Pvp }
 
     let getRoundTime round =
         match round.Stage with
+        | Draft -> 30
         | Preparing -> 25
         | Combat -> 60
         | Resolving -> 30
