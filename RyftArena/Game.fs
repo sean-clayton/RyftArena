@@ -66,11 +66,17 @@ module Game =
 
         if newMobs = previousMobs
         then Error (InvalidAction InvalidMobSale)
-        else Ok { game with
-                    PlayerMobs = Map.add mobInPlay.Owner newMobs game.PlayerMobs
-                    PlayerGold =
-                        game.PlayerGold
-                        |> Map.add mobInPlay.Owner (previousGold + mobInPlay.Mob.Value) }
+        else
+            let mobs = Map.add mobInPlay.Owner newMobs game.PlayerMobs
+            let gold =
+                game.PlayerGold
+                |> Map.add mobInPlay.Owner (previousGold + mobInPlay.Mob.Value)
+            let game =
+                { game with
+                    PlayerMobs = mobs
+                    PlayerGold = gold
+                    GameEvents = SellMob mobInPlay :: game.GameEvents }
+            Ok game
 
     let createGame players =
         { Id = Guid.NewGuid()

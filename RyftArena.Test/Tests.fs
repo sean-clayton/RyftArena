@@ -94,6 +94,7 @@ module GameTests =
             | Ok game ->
                 Assert.True (game.PlayerMobs = Map [(player, [])])
                 Assert.True (game.PlayerGold = Map [(player, 100)])
+                Assert.True (game.GameEvents |> List.head = (Game.SellMob mob))
             | _ -> raise (Xunit.Sdk.XunitException "Should not have error")
 
         | _ -> raise (Xunit.Sdk.XunitException "Should not have error")
