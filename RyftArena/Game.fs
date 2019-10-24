@@ -50,11 +50,13 @@ module Game =
                   Attachment = None }
             let newMobs = mobInPlay :: previousMobs
             let newMobsMap = Map.add player newMobs game.PlayerMobs
-
-            Ok { game with
+            let game =
+                { game with
                     PlayerGold = newGoldMap
                     PlayerMobs = newMobsMap
                     GameEvents = BuyMob(mob, player) :: game.GameEvents }
+
+            Ok game
 
     let sellMob mobInPlay game =
         let previous t = Map.find mobInPlay.Owner t
