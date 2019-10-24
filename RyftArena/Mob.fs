@@ -40,15 +40,13 @@ module Mob =
 
     let getNextTier mob =
         match mob with
-        | { Tier = OneStar } ->
-            Ok { Option.get mob.Successor with Tier = TwoStar }
-        | { Tier = TwoStar } ->
-            Ok { Option.get mob.Successor with Tier = ThreeStar }
-        | _ -> Error (InvalidAction InvalidMobUpgrade)
+        | { Tier = OneStar } -> Ok { Option.get mob.Successor with Tier = TwoStar }
+        | { Tier = TwoStar } -> Ok { Option.get mob.Successor with Tier = ThreeStar }
+        | _ -> Error(InvalidAction InvalidMobUpgrade)
 
     type MobInPlay =
         { Id: Guid
           Mob: T
           Owner: Player.T
           Placement: MobPlacement
-          Attachment: MobAttachment }
+          Attachment: MobAttachment option }

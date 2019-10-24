@@ -23,4 +23,6 @@ module Player =
 
     let createBot name =
         { Id = Guid.NewGuid()
-          Player = Bot { Id = Guid.NewGuid(); Name = name } }
+          Player = Bot
+            { Id = Guid.NewGuid()
+              Name = name } }

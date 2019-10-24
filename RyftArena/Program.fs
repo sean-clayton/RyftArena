@@ -7,6 +7,7 @@
           - Mobs
           - Game modes
     TODO: Make AI (via fsx or lua maybe? or hard-code)
+    TODO: Get good test coverage (80%+?)
 *)
 
 [<EntryPoint>]

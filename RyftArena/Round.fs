@@ -47,12 +47,11 @@ module Round =
                 |> Map.exists (fun mob _health -> mob.Owner = opponent)
 
             let opponentAIsAlive = opponentIsAlive round.OpponentA
-
             let opponentBisAlive = opponentIsAlive round.OpponentB
 
             match opponentAIsAlive, opponentBisAlive with
-            | true, _ -> Some(Victor round.OpponentA)
-            | _, true -> Some(Victor round.OpponentB)
+            | true, _ -> Some (Victor round.OpponentA)
+            | _, true -> Some (Victor round.OpponentB)
             | _ -> Some Draw
 
         | _ -> None
