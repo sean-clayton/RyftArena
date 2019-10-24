@@ -21,8 +21,18 @@ module Player =
         { Id: Guid
           Player: Player }
 
-    let createBot name =
+    let createPlayer player =
         { Id = Guid.NewGuid()
-          Player = Bot
-            { Id = Guid.NewGuid()
-              Name = name } }
+          Player = player }
+
+    let createHumanPlayer userName avatarUrl =
+        { Id = Guid.NewGuid()
+          Username = userName
+          AvatarUrl = avatarUrl }
+        |> Human
+        |> createPlayer
+
+    let createBotPlayer name =
+        { Id = Guid.NewGuid(); Name = name }
+        |> Bot
+        |> createPlayer

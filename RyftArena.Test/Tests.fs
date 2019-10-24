@@ -26,12 +26,7 @@ module GameTests =
 
     [<Fact>]
     let ``Creating a game with players has some state`` () =
-        let player =
-            { Id = Guid.NewGuid()
-              Player = Bot
-                { Id = Guid.NewGuid()
-                  Name = "Cool Bot" } }
-
+        let player = createBotPlayer "Cool Bot"
         let game = Game.createGame [player]
 
         (game.Players = [player]) |> should equal true
@@ -40,12 +35,7 @@ module GameTests =
 
     [<Fact>]
     let ``Can buy a mob if you have enough money`` () =
-        let player =
-            { Id = Guid.NewGuid()
-              Player = Bot
-                { Id = Guid.NewGuid()
-                  Name = "Cool Bot" } }
-
+        let player = createBotPlayer "Cool Bot"
         let game = Game.createGame [player]
         let game =
             { game with
@@ -74,12 +64,7 @@ module GameTests =
 
     [<Fact>]
     let ``Can sell a mob if it's yours`` () =
-        let player =
-            { Id = Guid.NewGuid()
-              Player = Bot
-                { Id = Guid.NewGuid()
-                  Name = "Cool Bot" } }
-
+        let player = createBotPlayer "Cool Bot"
         let game = Game.createGame [player]
         let game =
             { game with
