@@ -42,14 +42,14 @@ module GameTests =
                 PlayerGold = Map.add player 100 game.PlayerGold }
 
         let mob =
-                { Id = Guid.NewGuid()
-                  Name = "My Mob"
-                  Tier = OneStar
-                  Value = 1
-                  MaxHealth = 800
-                  AttackStyle = Melee Square
-                  Speed = 5
-                  Successor = None }
+            { Id = Guid.NewGuid()
+              Name = "My Mob"
+              Tier = OneStar
+              Value = 1
+              MaxHealth = 800
+              AttackStyle = Melee Square
+              Speed = 5
+              Successor = None }
 
         match Game.buyMob player mob game with
         | Ok newGame ->
@@ -77,14 +77,14 @@ module GameTests =
                 PlayerGold = Map.add player 100 game.PlayerGold }
 
         let mob =
-                { Id = Guid.NewGuid()
-                  Name = "My Mob"
-                  Tier = OneStar
-                  Value = 1
-                  MaxHealth = 800
-                  AttackStyle = Melee Square
-                  Speed = 5
-                  Successor = None }
+            { Id = Guid.NewGuid()
+              Name = "My Mob"
+              Tier = OneStar
+              Value = 1
+              MaxHealth = 800
+              AttackStyle = Melee Square
+              Speed = 5
+              Successor = None }
 
         match Game.buyMob player mob game with
         | Ok game ->
