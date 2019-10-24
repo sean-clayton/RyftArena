@@ -7,6 +7,15 @@ open RyftArena.Player
 open Xunit
 open FsUnit.Xunit
 
+module PlayerTests =
+    ()
+
+module MobTests =
+    ()
+
+module RoundTests =
+    ()
+
 module GameTests =
     [<Fact>]
     let ``Creating a game with no players creates a blank state`` () =
