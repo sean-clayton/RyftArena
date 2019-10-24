@@ -10,8 +10,9 @@ module GameTests =
     [<Fact>]
     let ``Creating a game with no players creates a blank state`` () =
         let game = Game.createGame []
-        game.GameEvents = [Game.InitializeMatch] |> Assert.True
-        game.Players = [] |> Assert.True
+
+        Assert.True (game.GameEvents = [Game.InitializeMatch])
+        Assert.True (game.Players = [])
 
     [<Fact>]
     let ``Creating a game with players has some state`` () =
@@ -22,9 +23,10 @@ module GameTests =
                   Name = "Cool Bot" } }
 
         let game = Game.createGame [player]
-        game.Players = [player] |> Assert.True
-        game.PlayerGold = Map [ (player, 1) ] |> Assert.True
-        game.PlayerHealth = Map [ (player, 100) ] |> Assert.True
+
+        Assert.True (game.Players = [player])
+        Assert.True (game.PlayerGold = Map [ (player, 1) ])
+        Assert.True (game.PlayerHealth = Map [ (player, 100) ])
 
     [<Fact>]
     let ``Can buy a mob if you have enough money`` () =
@@ -56,7 +58,7 @@ module GameTests =
                 |> Map.find player
                 |> List.head
 
-            mobInPlay.Mob = mob |> Assert.True
+            Assert.True (mobInPlay.Mob = mob)
 
         | Error _ -> raise (Xunit.Sdk.XunitException "Should not have error")
 
@@ -90,8 +92,8 @@ module GameTests =
 
             match Game.sellMob mob game with
             | Ok game ->
-                game.PlayerMobs = Map [(player, [])] |> Assert.True
-                game.PlayerGold = Map [(player, 100)] |> Assert.True
+                Assert.True (game.PlayerMobs = Map [(player, [])])
+                Assert.True (game.PlayerGold = Map [(player, 100)])
             | _ -> raise (Xunit.Sdk.XunitException "Should not have error")
 
         | _ -> raise (Xunit.Sdk.XunitException "Should not have error")
