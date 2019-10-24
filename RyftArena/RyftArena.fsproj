@@ -5,6 +5,7 @@
     <RootNamespace>RyftArena</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="mobs\ranger-1.xml" />
     <Compile Include="Common.fs" />
     <Compile Include="Player.fs" />
     <Compile Include="Mob.fs" />

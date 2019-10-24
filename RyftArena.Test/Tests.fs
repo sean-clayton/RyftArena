@@ -5,14 +5,15 @@ open RyftArena
 open RyftArena.Mob
 open RyftArena.Player
 open Xunit
+open FsUnit.Xunit
 
 module GameTests =
     [<Fact>]
     let ``Creating a game with no players creates a blank state`` () =
         let game = Game.createGame []
 
-        Assert.True (game.GameEvents = [Game.InitializeMatch])
-        Assert.True (game.Players = [])
+        (game.GameEvents = [Game.InitializeMatch]) |> should equal true
+        (game.Players = []) |> should equal true
 
     [<Fact>]
     let ``Creating a game with players has some state`` () =
@@ -24,9 +25,9 @@ module GameTests =
 
         let game = Game.createGame [player]
 
-        Assert.True (game.Players = [player])
-        Assert.True (game.PlayerGold = Map [ (player, 1) ])
-        Assert.True (game.PlayerHealth = Map [ (player, 100) ])
+        (game.Players = [player]) |> should equal true
+        (game.PlayerGold = (Map [ (player, 1) ])) |> should equal true
+        (game.PlayerHealth = (Map [ (player, 100) ])) |> should equal true
 
     [<Fact>]
     let ``Can buy a mob if you have enough money`` () =
@@ -58,10 +59,9 @@ module GameTests =
                 |> Map.find player
                 |> List.head
 
-            Assert.True (mobInPlay.Mob = mob)
+            mobInPlay.Mob |> should equal mob
 
         | Error _ -> raise (Xunit.Sdk.XunitException "Should not have error")
-
 
     [<Fact>]
     let ``Can sell a mob if it's yours`` () =
@@ -92,9 +92,9 @@ module GameTests =
 
             match Game.sellMob mob game with
             | Ok game ->
-                Assert.True (game.PlayerMobs = Map [(player, [])])
-                Assert.True (game.PlayerGold = Map [(player, 100)])
-                Assert.True (game.GameEvents |> List.head = (Game.SellMob mob))
+                (game.PlayerMobs = (Map [(player, [])])) |> should equal true
+                (game.PlayerGold = (Map [(player, 100)])) |> should equal true
+                (game.GameEvents |> List.head = Game.SellMob mob) |> should equal true
             | _ -> raise (Xunit.Sdk.XunitException "Should not have error")
 
         | _ -> raise (Xunit.Sdk.XunitException "Should not have error")
