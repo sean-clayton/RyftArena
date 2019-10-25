@@ -1,5 +1,6 @@
 namespace RyftArena
 
+open System
 open System.Numerics
 open Mob
 
@@ -23,13 +24,32 @@ module Round =
         | PveWithDraft
 
     type T =
-        { Name: int
+        { Id: Guid
+          Name: int
           Stage: Stage
           OpponentA: Player.T
           OpponentB: Player.T
           RoundKind: RoundKind
           mutable MobPositions: Map<MobInPlay, Vector2>
           mutable MobHealth: Map<MobInPlay, MobHealth> }
+
+    let createRound opponentA opponentAMobs opponentB opponentBMobs =
+        let mobs = opponentAMobs @ opponentBMobs
+        let mobPositions =
+            List.zip mobs (List.replicate (List.length mobs) Vector2.Zero)
+            |> Map
+        let mobHealth =
+            List.zip mobs (List.replicate (List.length mobs) 100)
+            |> Map
+
+        { Id = Guid.NewGuid()
+          Name = 1
+          Stage = Draft
+          OpponentA = opponentA
+          OpponentB = opponentB
+          RoundKind = PveWithDraft
+          MobPositions = mobPositions
+          MobHealth = mobHealth }
 
     /// <summary>
     /// Gets the winner from a round,
@@ -50,8 +70,8 @@ module Round =
             let opponentBisAlive = opponentIsAlive round.OpponentB
 
             match opponentAIsAlive, opponentBisAlive with
-            | true, _ -> Some (Victor round.OpponentA)
-            | _, true -> Some (Victor round.OpponentB)
+            | true, _ -> Some(Victor round.OpponentA)
+            | _, true -> Some(Victor round.OpponentB)
             | _ -> Some Draw
 
         | _ -> None
@@ -71,19 +91,32 @@ module Round =
                     else remainingHealth
                 | _ -> health)
 
+    let moveMob mob newPosition round =
+        round.MobPositions <-
+            round.MobPositions
+            |> Map.map (fun m position ->
+                match m with
+                | m when m = mob -> newPosition
+                | _ -> position)
+
     /// <summary>
     /// Determines if a given mob is an enemy to a given player
     /// </summary>
     let mobIsEnemyToPlayer player mob = mob.Owner <> player
 
     let getNewRound previousRound =
+        let pveWithDraft = { previousRound with RoundKind = PveWithDraft }
+        let pve = { previousRound with RoundKind = Pve }
+        let pvpWithDraft = { previousRound with RoundKind = PvpWithDraft }
+        let pvp = { previousRound with RoundKind = Pvp }
+
         match previousRound.Name with
-        | 1 -> { previousRound with RoundKind = PveWithDraft }
         | 2
         | 15
-        | 20 -> { previousRound with RoundKind = Pve }
-        | num when num % 6 = 0 -> { previousRound with RoundKind = PvpWithDraft }
-        | _ -> { previousRound with RoundKind = Pvp }
+        | 20 -> pve
+        | 14 | 21 -> pvpWithDraft
+        | num when num % 5 = 0 -> pveWithDraft
+        | _ -> pvp
 
     let getRoundTime round =
         match round.Stage with
