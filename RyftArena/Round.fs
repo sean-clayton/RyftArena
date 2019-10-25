@@ -110,13 +110,16 @@ module Round =
         let pvpWithDraft = { previousRound with RoundKind = PvpWithDraft }
         let pvp = { previousRound with RoundKind = Pvp }
 
-        match previousRound.Name with
-        | 2
-        | 15
-        | 20 -> pve
-        | 14 | 21 -> pvpWithDraft
-        | num when num % 5 = 0 -> pveWithDraft
-        | _ -> pvp
+        let newRound =
+            match previousRound.Name with
+            | 2
+            | 15
+            | 20 -> pve
+            | 14 | 21 -> pvpWithDraft
+            | num when num % 5 = 0 -> pveWithDraft
+            | _ -> pvp
+
+        { newRound with Id = Guid.NewGuid() }
 
     let getRoundTime round =
         match round.Stage with
