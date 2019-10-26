@@ -53,9 +53,9 @@ module Model =
         | GlobalItem of GlobalItem
 
     and OwnedItem =
-        | OwnedMobAttachment of HeroAttachment
-        | OwnedSupportObject of SupportObject
-        | GlobalItem of GlobalItem
+        | OwnedMobAttachment of OwnedHeroAttachment
+        | OwnedSupportObject of OwnedSupportObject
+        | GlobalItem of OwnedGlobalItem
 
     and HeroAttachment =
         { Id: Guid
@@ -147,6 +147,16 @@ module Model =
     and OwnedSupportObject =
         { Id: Guid
           SupportObject: SupportObject
+          Owner: Player }
+
+    and OwnedHeroAttachment =
+        { Id: Guid
+          HeroAttachment: HeroAttachment
+          Owner: Player }
+
+    and OwnedGlobalItem =
+        { Id: Guid
+          GlobalItem: GlobalItem
           Owner: Player }
 
     and PlacedSupportObject =
