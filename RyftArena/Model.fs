@@ -2,20 +2,28 @@ namespace RyftArena
 
 open System
 open System.Numerics
-open Vector2Int
+open Utilities.Vector2Int
 
 module Model =
+    /// Time, seconds
+    [<Measure>] type s
+    /// Distance, generic unit
+    [<Measure>] type u
+
     type RoundNumber = int
     type Health = int
     type Gold = int
-    type Damage =
-        { Min: int
-          Max: int }
+    type Exp = int
+    type Damage = int
 
     type GameState =
         { Id: Guid
           Players: Player list
+          ConnectedPlayers: Player list
+          DisconnectedPlayers: Player list
           PlayerGold: Map<Player, Gold>
+          PlayerHeroes: Map<Player, Hero list>
+          PlayerItems: Map<Player, Item list>
           GameEvents: (GameEvent * DateTime option) list
           HeroPool: Hero list
           Stage: GameStage }
@@ -23,15 +31,15 @@ module Model =
     and GameEvent =
         | InitializeGame
         | InitializeRound
-        | HackerDetected of hacker: Player
+        | CheaterDetected of HumanPlayer
         | SellHero of OwnedHero
         | ActorAttacked of attacker: PlayingActor * receiver: PlayingActor
         | ActorKilled of PlayingActor
         | NewRound of RoundState
         | RoundStarted of RoundState
         | PlayerReceivedItem of item: Item * receiver: Player
-        | PlayerPurchasedHero of newMob: Hero * purchaser: Player
-        | PlayerPurchasedExp of xpAmount: int * purchaser: Player
+        | PlayerPurchasedHero of newHero: Hero * purchaser: Player
+        | PlayerPurchasedExp of Exp * purchaser: Player
         | PlayerLeveledUp of Player
         | PlayerPlacedAttachmentOnHero of Player * HeroAttachment * OwnedHero
         | RoundEnd of RoundState
@@ -40,12 +48,14 @@ module Model =
 
     and RoundState =
         { Id: Guid
+          TimeLeftInStage: int<s>
           RoundNumber: RoundNumber
           HomeOpponent: Opponent
           AwayOpponent: Opponent
-          HeroPositions: Map<PlayingActor, Vector2>
-          HeroHealth: Map<PlayingActor, Health>
-          SupportObjectsPositions: Map<PlacedSupportObject, Vector2> }
+          ActorPositions: Map<PlayingActor, Vector2>
+          ActorHealth: Map<PlayingActor, Health>
+          SupportObjectsPositions: Map<PlacedSupportObject, Vector2>
+          SupportObjectHealth: Map<PlacedSupportObject, Health> }
 
     and Item =
         | MobAttachment of HeroAttachment
@@ -88,11 +98,11 @@ module Model =
 
     and AttackStyle =
         | Melee of MeleeStyle
-        | Ranged of distance: int
+        | Ranged of distance: int<u>
 
-    and MovementType =
+    and Movement =
         | Leap
-        | Run of speed: int
+        | Run of speed: int<u/s>
 
     and Alliance =
         | Knight
@@ -126,6 +136,7 @@ module Model =
           Name: string
           Tier: Tier
           AttackStyle: AttackStyle
+          Movement: Movement
           Damage: Damage
           Alliances: Alliance list
           Successor: Hero option }
@@ -178,10 +189,21 @@ module Model =
         { Id: Guid
           Damage: Damage
           AttackStyle: AttackStyle
-          Size: Vector2Int }
+          Size: Vector2Int
+          Movement: Movement }
+
+    and PlayerInfo =
+        | HumanPlayer of HumanPlayer
+        | Bot of BotPlayer
+
+    and BotPlayer =
+        { Id: Guid
+          BotName: string }
+
+    and HumanPlayer =
+        { Id: Guid
+          Username: string }
 
     and Player =
         { Id: Guid
-          Username: string
-          Heroes: OwnedHero list
-          Items: OwnedItem list }
+          PlayerInfo: PlayerInfo }

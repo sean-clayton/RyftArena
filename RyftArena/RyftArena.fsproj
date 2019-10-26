@@ -5,7 +5,7 @@
     <RootNamespace>RyftArena</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Vector2Int.fs" />
+    <Compile Include="utilities\Vector2Int.fs" />
     <Compile Include="Model.fs" />
     <Compile Include="Common.fs" />
     <Compile Include="Player.fs" />
