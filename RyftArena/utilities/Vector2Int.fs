@@ -1,4 +1,4 @@
-namespace RyftArena
+namespace RyftArena.Utilities
 open System.Numerics
 
 module Vector2Int =
