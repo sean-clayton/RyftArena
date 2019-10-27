@@ -1,4 +1,4 @@
 namespace RyftArena
 
-module Game =
+module GameSession =
     ()
