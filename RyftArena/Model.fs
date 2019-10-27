@@ -11,7 +11,9 @@ module Model =
     [<Measure>] type u
 
     type RoundNumber = int
+    type Cooldown = int<s>
     type Health = int
+    type Mana = int
     type Gold = int
     type Exp = int
     type Damage = int
@@ -26,6 +28,7 @@ module Model =
           PlayerItems: Map<Player, Item list>
           GameEvents: (GameEvent * DateTime option) list
           HeroPool: Hero list
+          ItemPool: Item list
           Stage: GameStage }
 
     and GameEvent =
@@ -54,8 +57,16 @@ module Model =
           AwayOpponent: Opponent
           ActorPositions: Map<PlayingActor, Vector2>
           ActorHealth: Map<PlayingActor, Health>
+          ActorMana: Map<PlayingActor, Mana>
+          ActorStatusEffects: Map<PlayingActor, StatusEffect list>
+          ActorSkillCooldown: Map<PlayingActor, Cooldown>
           SupportObjectsPositions: Map<PlacedSupportObject, Vector2>
           SupportObjectHealth: Map<PlacedSupportObject, Health> }
+
+    and StatusEffect =
+        | Silenced
+        | Hexed
+        | Stunned
 
     and Item =
         | MobAttachment of HeroAttachment
@@ -65,15 +76,26 @@ module Model =
     and OwnedItem =
         | OwnedMobAttachment of OwnedHeroAttachment
         | OwnedSupportObject of OwnedSupportObject
-        | GlobalItem of OwnedGlobalItem
+        | OwnedGlobalItem of OwnedGlobalItem
+
+    /// TODO:
+    /// In the future we should redo this to Common / Rare / Exotic etc
+    and ItemTier =
+        | One
+        | Two
+        | Three
+        | Four
+        | Five
 
     and HeroAttachment =
         { Id: Guid
-          Name: string }
+          Name: string
+          Tier: ItemTier }
 
     and GlobalItem =
         { Id: Guid
-          Name: string }
+          Name: string
+          Tier: ItemTier }
 
     and GameStage =
         | PreGame
@@ -91,6 +113,7 @@ module Model =
     and PlayingActor =
         | Hero of PlacedHero
         | Mob of PlacedMob
+        | Underlord of PlacedUnderlord
 
     and MeleeStyle =
         | Plus
@@ -104,6 +127,8 @@ module Model =
         | Leap
         | Run of speed: int<u/s>
 
+    /// TODO:
+    /// Replace these to fit within the lore of the Ryft universe
     and Alliance =
         | Knight
         | Warrior
@@ -134,14 +159,23 @@ module Model =
           Rarity: int
           Value: Gold
           Name: string
-          Tier: Tier
+          MaxHealth: Health
+          Tier: HeroTier
           AttackStyle: AttackStyle
           Movement: Movement
           Damage: Damage
           Alliances: Alliance list
           Successor: Hero option }
 
-    and Tier =
+    and Underlord =
+        { Id: Guid
+          Name: string
+          AttackStyle: AttackStyle
+          Damage: Damage
+          MaxHealth: Health
+          MaxMana: Mana }
+
+    and HeroTier =
         | OneStar
         | TwoStar
         | ThreeStar
@@ -153,7 +187,8 @@ module Model =
 
     and SupportObject =
         { Id: Guid
-          Size: Vector2Int }
+          Size: Vector2Int
+          Tier: ItemTier }
 
     and OwnedSupportObject =
         { Id: Guid
@@ -165,6 +200,16 @@ module Model =
           HeroAttachment: HeroAttachment
           Owner: Player }
 
+    and OwnedUnderlord =
+        { Id: Guid
+          Underlord: Underlord
+          Owner: Player }
+
+    and PlacedUnderlord =
+        { Id: Guid
+          Underlord: OwnedUnderlord
+          PositionOnBoard: Vector2Int }
+
     and OwnedGlobalItem =
         { Id: Guid
           GlobalItem: GlobalItem
@@ -173,7 +218,7 @@ module Model =
     and PlacedSupportObject =
         { Id: Guid
           PositionOnBoard: Vector2Int
-          SupportObject: SupportObject }
+          SupportObject: OwnedSupportObject }
 
     and PlacedHero =
         { Id: Guid
@@ -188,9 +233,15 @@ module Model =
     and Mob =
         { Id: Guid
           Damage: Damage
+          MaxHealth: Health
           AttackStyle: AttackStyle
           Size: Vector2Int
           Movement: Movement }
+
+    and Player =
+        { Id: Guid
+          PlayerInfo: PlayerInfo
+          Underlord: Underlord }
 
     and PlayerInfo =
         | HumanPlayer of HumanPlayer
@@ -203,7 +254,3 @@ module Model =
     and HumanPlayer =
         { Id: Guid
           Username: string }
-
-    and Player =
-        { Id: Guid
-          PlayerInfo: PlayerInfo }

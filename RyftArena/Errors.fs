@@ -1,7 +1,6 @@
 namespace RyftArena
 
-module Common =
-
+module Errors =
     module Errors =
         type InvalidActions =
             | InvalidMobUpgrade

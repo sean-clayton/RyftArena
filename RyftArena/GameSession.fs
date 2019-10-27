@@ -1,4 +1,4 @@
 namespace RyftArena
 
-module Player =
+module Game =
     ()

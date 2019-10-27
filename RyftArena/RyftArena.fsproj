@@ -6,12 +6,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="utilities\Vector2Int.fs" />
+    <Compile Include="Errors.fs" />
     <Compile Include="Model.fs" />
-    <Compile Include="Common.fs" />
     <Compile Include="Player.fs" />
-    <Compile Include="Mob.fs" />
     <Compile Include="Round.fs" />
-    <Compile Include="Game.fs" />
+    <Compile Include="GameSession.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 </Project>
