@@ -13,6 +13,6 @@ jobs:
         with:
           dotnet-version: 3.0.100
       - name: Build
-        run: dotnet build --configuration Release --nologo
+        run: dotnet build --configuration Release --verbosity m
       - name: Test
         run: dotnet test --nologo -v q
