@@ -21,11 +21,10 @@ module GameSessionTests =
         let player =
             { Id = Guid.NewGuid()
               PlayerInfo =
-                  Bot
-                    { Id = Guid.NewGuid()
-                      BotName = "Bot Player" }
+                  Bot { Id = Guid.NewGuid()
+                        BotName = "Bot Player" }
               Underlord = underlord }
 
         let players = [player]
         let gameSession = GameSession.createGameSession players;
-        (gameSession.Players = players) |> should be True
+        gameSession.Players |> should equal players
